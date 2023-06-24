@@ -85,6 +85,9 @@ app.use("/order/get", ordersget);
 
 // Start the server
 const PORT = 3011;
+app.get("/", (req, res) => {
+  res.send("hi");
+});
 server.listen(PORT, () => {
   console.log(`Server is listening on port ${PORT}`);
 });
