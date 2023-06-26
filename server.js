@@ -54,6 +54,12 @@ io.on("connection", (socket) => {
     changeStream.close(); // Close the change stream on disconnect
   });
 });
+app.get("/", (req, res) => {
+  res.send("balnk");
+});
+app.get("/order", (req, res) => {
+  res.send(" not  balnk");
+});
 
 // API endpoint to create a new order
 app.post("/orders", async (req, res) => {
