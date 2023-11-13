@@ -72,7 +72,7 @@ const orderSchema = new mongoose.Schema({
     default: "Pending", // Set the default value for status
   },
   houseId: {
-    type: String,
+    type: mongoose.Schema.Types.Mixed,
   },
   GrandTotal: {
     type: String,
@@ -80,7 +80,6 @@ const orderSchema = new mongoose.Schema({
   },
   Quantity: {
     type: Number,
-    required: true,
   },
   cancellationReason: {
     type: String,
@@ -89,6 +88,9 @@ const orderSchema = new mongoose.Schema({
   returnReason: {
     type: String,
     default: null, // Default value is null, meaning not canceled by default
+  },
+  zone: {
+    type: String,
   },
 });
 orderSchema.plugin(mongoosePaginate);

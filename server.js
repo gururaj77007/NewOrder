@@ -94,7 +94,7 @@ app.use("/order/cancel", cancel);
 app.use("/order/return", returnorder);
 
 // Start the server
-const PORT = 3022;
+const PORT = process.env.PORT || 3022;
 app.get("/", (req, res) => {
   res.send("hi");
 });

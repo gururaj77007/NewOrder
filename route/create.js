@@ -20,8 +20,9 @@ router.post("/create", async (req, res) => {
       paymentMethod,
       GrandTotal,
       houseId,
-      Quantity,
     } = req.body;
+    const zones = ["A", "B", "C", "D"];
+    const randomZone = zones[Math.floor(Math.random() * zones.length)];
 
     const createdOrder = await Order.create({
       userId,
@@ -30,7 +31,7 @@ router.post("/create", async (req, res) => {
       shippingAddress,
       paymentMethod,
       GrandTotal,
-      Quantity,
+      zone: randomZone,
     });
     if (paymentMethod !== "COD") {
       const amount = GrandTotal * 100;
