@@ -23,6 +23,9 @@ app.use(express.json());
 // });
 const { mongoose_connect } = require("./mongo-db/connect");
 mongoose_connect();
+app.get("/health", (req, res) => {
+  res.status(200).json({ status: "OK" });
+});
 
 app.use("/order/create", create);
 // Socket.IO event handler for order updates
@@ -64,6 +67,7 @@ io.on("connection", (socket) => {
 // });
 
 // API endpoint to create a new order
+
 app.post("/orders", async (req, res) => {
   try {
     const { customerName, products } = req.body;
