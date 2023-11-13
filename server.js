@@ -7,6 +7,8 @@ const http = require("http");
 const create = require("./route/create");
 const Order = require("./mongo-db/ordershema");
 const ordersget = require("./route/get");
+const cancel = require("./route/cancel");
+const returnorder = require("../order/route/return");
 
 // Create Express app
 const app = express();
@@ -22,7 +24,7 @@ app.use(express.json());
 const { mongoose_connect } = require("./mongo-db/connect");
 mongoose_connect();
 
-app.use("/order", create);
+app.use("/order/create", create);
 // Socket.IO event handler for order updates
 io.on("connection", (socket) => {
   console.log("New client connected");
@@ -54,12 +56,12 @@ io.on("connection", (socket) => {
     changeStream.close(); // Close the change stream on disconnect
   });
 });
-app.get("/", (req, res) => {
-  res.send("balnk");
-});
-app.get("/order", (req, res) => {
-  res.send(" not  balnk");
-});
+// app.get("/", (req, res) => {
+//   res.send("balnk");
+// });
+// app.get("/order", (req, res) => {
+//   res.send(" not  balnk");
+// });
 
 // API endpoint to create a new order
 app.post("/orders", async (req, res) => {
@@ -88,9 +90,11 @@ app.post("/orders", async (req, res) => {
   }
 });
 app.use("/order/get", ordersget);
+app.use("/order/cancel", cancel);
+app.use("/order/return", returnorder);
 
 // Start the server
-const PORT = 3011;
+const PORT = 3022;
 app.get("/", (req, res) => {
   res.send("hi");
 });

@@ -4,7 +4,7 @@ let mongoose_connect = async () => {
   mongoose.set("strictQuery", true);
   await mongoose
     .connect(
-      "mongodb+srv://gururaj:k11@cluster0.sbiekd1.mongodb.net/Orders?retryWrites=true&w=majority",
+      "mongodb+srv://vvce21cseaiml0004:Ramguru123@gb.dq3vt5r.mongodb.net/Orders?retryWrites=true&w=majority",
       { useNewUrlParser: true }
     )
     .then((e) => {

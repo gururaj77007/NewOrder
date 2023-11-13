@@ -13,19 +13,27 @@ const razorpay = new Razorpay({
 // Create an order
 router.post("/create", async (req, res) => {
   try {
-    const { userId, profileId, products, shippingAddress, paymentMethod } =
-      req.body;
-
-    const createdOrder = await Order.create({
+    const {
       userId,
-      profileIds: profileId,
       products,
       shippingAddress,
       paymentMethod,
+      GrandTotal,
+      houseId,
+      Quantity,
+    } = req.body;
+
+    const createdOrder = await Order.create({
+      userId,
+      houseId,
+      products,
+      shippingAddress,
+      paymentMethod,
+      GrandTotal,
+      Quantity,
     });
     if (paymentMethod !== "COD") {
-      const amount =
-        products.reduce((acc, product) => acc + product.TotalPrice, 0) * 100;
+      const amount = GrandTotal * 100;
 
       const orderOptions = {
         amount,

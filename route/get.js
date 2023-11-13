@@ -2,10 +2,29 @@ const express = require("express");
 const router = express.Router();
 const Order = require("../mongo-db/ordershema");
 
-// GET /orders/:userId
+// Get a single order by its ID
+router.get("/:orderId", async (req, res) => {
+  try {
+    const orderId = req.params.orderId;
+
+    // Find the order by its ID
+    const order = await Order.findById(orderId);
+
+    if (!order) {
+      return res.status(404).json({ error: "Order not found" });
+    }
+
+    res.json(order);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to fetch order" });
+  }
+});
+
+// Get a list of orders
 router.post("/", async (req, res) => {
   try {
-    const { userId, page, limit } = req.body;
+    const { userId, page, limit, history } = req.body;
+    console.log(req.body);
 
     const options = {
       page: parseInt(page),
@@ -13,13 +32,19 @@ router.post("/", async (req, res) => {
       sort: { createdAt: -1 }, // Sort by descending order of createdAt field (recent time)
     };
 
-    const query = {
+    let query = {
       userId,
-      status: { $nin: ["declined", "delivered"] }, // Exclude orders with status "declined" or "delivered"
     };
 
+    // If history is true, include cancelled and delivered orders
+    if (history) {
+      query.status = { $in: ["Cancelled", "Delivered", "Returned"] };
+    } else {
+      // Exclude cancelled and delivered orders
+      query.status = { $nin: ["Cancelled", "Delivered"] };
+    }
+
     const orders = await Order.paginate(query, options);
-    console.log(orders.page);
     res.json(orders);
   } catch (error) {
     res.status(500).json({ error: "Failed to fetch orders" });

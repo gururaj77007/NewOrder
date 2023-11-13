@@ -1,34 +1,36 @@
 const mongoose = require("mongoose");
 const mongoosePaginate = require("mongoose-paginate-v2");
 const productSchema = new mongoose.Schema({
-  Name: {
+  productName: {
     type: String,
     required: true,
   },
-  Price: {
+  price: {
     type: Number,
     required: true,
   },
-  ProfileId: {
-    type: mongoose.Schema.Types.ObjectId,
-    // ref: "Profile",
-    required: true,
-  },
-  Quantity: {
+  discount: {
     type: Number,
-    required: true,
+    default: 0, // Default discount value is 0
   },
-  Size: {
-    type: String,
-    default: "",
-  },
-  TotalPrice: {
-    type: Number,
-    required: true,
-  },
-  id: {
+  houseId: {
     type: String,
     required: true,
+  },
+  category: {
+    type: String,
+    required: true,
+  },
+  status: {
+    type: String,
+    enum: ["Active", "Inactive"],
+    default: "Active",
+  },
+  imageUrl: {
+    type: String,
+  },
+  discountPercentage: {
+    type: Number,
   },
 });
 
@@ -40,7 +42,7 @@ const orderSchema = new mongoose.Schema({
   },
   profileIds: [
     {
-      type: mongoose.Schema.Types.ObjectId,
+      type: String,
       // ref: "Profile",
       required: true,
     },
@@ -67,7 +69,26 @@ const orderSchema = new mongoose.Schema({
   status: {
     type: String,
     required: true,
-    default: "pending", // Set the default value for status
+    default: "Pending", // Set the default value for status
+  },
+  houseId: {
+    type: String,
+  },
+  GrandTotal: {
+    type: String,
+    required: true,
+  },
+  Quantity: {
+    type: Number,
+    required: true,
+  },
+  cancellationReason: {
+    type: String,
+    default: null, // Default value is null, meaning not canceled by default
+  },
+  returnReason: {
+    type: String,
+    default: null, // Default value is null, meaning not canceled by default
   },
 });
 orderSchema.plugin(mongoosePaginate);
