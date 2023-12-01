@@ -92,6 +92,10 @@ const orderSchema = new mongoose.Schema({
   zone: {
     type: String,
   },
+  shippingagentid: {
+    type: String,
+    default: null,
+  },
 });
 orderSchema.plugin(mongoosePaginate);
 

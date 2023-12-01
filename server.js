@@ -9,6 +9,7 @@ const Order = require("./mongo-db/ordershema");
 const ordersget = require("./route/get");
 const cancel = require("./route/cancel");
 const returnorder = require("./route/return");
+const agent = require("./route/Agentorder");
 
 // Create Express app
 const app = express();
@@ -96,6 +97,7 @@ app.post("/orders", async (req, res) => {
 app.use("/order/get", ordersget);
 app.use("/order/cancel", cancel);
 app.use("/order/return", returnorder);
+app.use("/agent", agent);
 
 // Start the server
 const PORT = process.env.PORT || 3022;
