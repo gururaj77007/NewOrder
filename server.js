@@ -13,9 +13,12 @@ const agent = require("./route/Agentorder");
 
 // Create Express app
 const app = express();
-const http = require("http").createServer(app);
+const http = require("http");
+const server = http.createServer(app);
 
-const io = require("socket.io")(http);
+const io = new socketIO.Server(server, {
+  path: "/socket.io/", // Change this to your desired custom path
+});
 
 app.use(express.json());
 
@@ -106,6 +109,6 @@ const PORT = process.env.PORT || 3022;
 app.get("/", (req, res) => {
   res.send("hi");
 });
-http.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`Server is listening on port ${PORT}`);
 });
