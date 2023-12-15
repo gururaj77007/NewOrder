@@ -14,7 +14,7 @@ const agent = require("./route/Agentorder");
 // Create Express app
 const app = express();
 const server = http.createServer(app);
-const io = new socketIO.Server({
+const io = socketIO(server, {
   path: "/socket.io/", // Change this to your desired custom path
 });
 
