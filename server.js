@@ -14,12 +14,8 @@ const agent = require("./route/Agentorder");
 // Create Express app
 const app = express();
 const server = http.createServer(app);
-const io = require("socket.io")(http, {
-  cors: {
-    origin: "*",
-    methods: ["GET", "POST"],
-  },
-});
+const io = require("socket.io");
+
 app.use(express.json());
 
 // Connect to MongoDB
