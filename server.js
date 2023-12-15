@@ -3,7 +3,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const socketIO = require("socket.io");
-const http = require("http");
+
 const create = require("./route/create");
 const Order = require("./mongo-db/ordershema");
 const ordersget = require("./route/get");
@@ -13,10 +13,9 @@ const agent = require("./route/Agentorder");
 
 // Create Express app
 const app = express();
-const server = http.createServer(app);
-const io = socketIO(server, {
-  path: "/socket.io/", // Change this to your desired custom path
-});
+const http = require("http").createServer(app);
+
+const io = require("socket.io")(http);
 
 app.use(express.json());
 
@@ -107,6 +106,6 @@ const PORT = process.env.PORT || 3022;
 app.get("/", (req, res) => {
   res.send("hi");
 });
-server.listen(PORT, () => {
+http.listen(PORT, () => {
   console.log(`Server is listening on port ${PORT}`);
 });
