@@ -14,12 +14,11 @@ const agent = require("./route/Agentorder");
 // Create Express app
 const app = express();
 const http = require("http");
-const server = http.createServer(app);
 
+var server = http.createServer(app);
 const io = new socketIO.Server(server, {
   path: "/socket.io/", // Change this to your desired custom path
 });
-
 app.use(express.json());
 
 // Connect to MongoDB

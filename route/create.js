@@ -15,6 +15,7 @@ router.post("/create", async (req, res) => {
   try {
     const {
       userId,
+      profileIds,
       products,
       shippingAddress,
       paymentMethod,
@@ -27,6 +28,7 @@ router.post("/create", async (req, res) => {
     const createdOrder = await Order.create({
       userId,
       houseId,
+      profileIds,
       products,
       shippingAddress,
       paymentMethod,
