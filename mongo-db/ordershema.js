@@ -44,7 +44,6 @@ const orderSchema = new mongoose.Schema({
     {
       type: String,
       // ref: "Profile",
-      required: true,
     },
   ],
   products: {
