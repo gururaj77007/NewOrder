@@ -34,5 +34,27 @@ router.get("/assign-shipping-agent/:orderId", async (req, res) => {
     return res.status(500).json({ message: "Internal Server Error" });
   }
 });
+router.get("/orders/:profileIds", async (req, res) => {
+  try {
+    const { profileIds } = req.params;
+
+    // Find orders with matching profileIds, sorted by createdAt in descending order
+    const orders = await Order.find({ profileIds: { $in: [profileIds] } }).sort(
+      { createdAt: -1 }
+    ); // Sort by createdAt in descending order
+
+    if (!orders || orders.length === 0) {
+      return res
+        .status(404)
+        .json({ error: "No orders found for the given profileIds" });
+    }
+
+    // Respond with the orders
+    res.status(200).json(orders);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
+  }
+});
 
 module.exports = router;
